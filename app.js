@@ -49,14 +49,12 @@ app.post("/spots", async (req, res) => {
   //If !name is true, JavaScript won't evaluate the remaining conditions unnecessarily.
 
   try {
-    await pool.query(
-      "INSERT INTO spots (name, location, description) VALUES ($1, $2, $3)",
+    const result = await pool.query(
+      "INSERT INTO spots (name, location, description) VALUES ($1, $2, $3) RETURNING *",
       [name, location, description],
     );
 
-    return res.status(201).json({
-      message: "Spot created successfully",
-    });
+    return res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     return res.status(500).json({
