@@ -34,9 +34,9 @@ app.post("/spots", async (req, res) => {
   const { name, description, location } = req.body;
 
   if (
-    !name ||
-    !description ||
-    !location ||
+    typeof name !== "string" ||
+    typeof description !== "string" ||
+    typeof location !== "string" ||
     name.trim() === "" ||
     description.trim() === "" ||
     location.trim() === ""
