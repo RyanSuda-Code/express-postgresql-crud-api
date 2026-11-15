@@ -52,9 +52,9 @@ app.post("/spots", async (req, res) => {
     const result = await pool.query(
       "INSERT INTO spots (name, location, description) VALUES ($1, $2, $3) RETURNING *",
       [name, location, description],
-    );
+    ); // RETURNING *, the FE receives the complete saved record, inclusding the ID. While also telling PostgreSQL to send back a copy of the row it just created.
 
-    return res.status(201).json(result.rows[0]);
+    return res.status(201).json(result.rows[0]); //result.rows[0] returns only the newly saved data with
   } catch (error) {
     console.error(error);
     return res.status(500).json({
