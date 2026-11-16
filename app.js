@@ -12,7 +12,7 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-app.use(express.json());
+app.use(express.json()); // parse the incoming data so that JS can read it and we can access the data using req.body.
 
 app.get("/spots", async (req, res) => {
   try {
@@ -32,6 +32,8 @@ app.get("/spots", async (req, res) => {
 
 app.post("/spots", async (req, res) => {
   const { name, description, location } = req.body;
+  // Destructuring. Unpack the three values from req.body
+  // Use them directly without typing req.body every time
 
   if (
     typeof name !== "string" ||
